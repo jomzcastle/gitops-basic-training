@@ -4,8 +4,7 @@ metadata:
   name: {{ include "webapp.fullname" . }}
   labels:
     {{- include "webapp.labels" . | nindent 4 }}
-  annotitations:
-    link.argocd.argoproj.io/external-link: http://labs.sass.ro:{{ .Values.service.externalPort }}{{- toYaml . | nindent 8 }}
+    {{- toYaml . | nindent 8 }}
     {{- end }}      
 spec:
   {{- if not .Values.autoscaling.enabled }}
@@ -18,6 +17,8 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        annotations:
+         link.argocd.argoproj.io/external-link: http://labs.sass.ro:{{ .Values.service.externalPort }}
       {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
